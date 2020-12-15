@@ -3,45 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ntomika <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: sshellie <sshellie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/16 20:14:05 by ntomika           #+#    #+#             */
-/*   Updated: 2020/11/18 22:43:48 by ntomika          ###   ########.fr       */
+/*   Created: 2020/10/31 19:35:25 by sshellie          #+#    #+#             */
+/*   Updated: 2020/11/24 20:47:47 by sshellie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	ft_search(char const *set, char s1)
+char			*ft_strtrim(char const *s1, char const *set)
 {
-	int j;
+	char		*str;
+	size_t		start;
+	size_t		finish;
 
-	j = 0;
-	while (set[j])
-	{
-		if (set[j] == s1)
-			return (1);
-		j++;
-	}
-	return (0);
-}
-
-char		*ft_strtrim(char const *s1, char const *set)
-{
-	char	*s2;
-	int		i;
-	int		end;
-
-	if (!s1)
+	start = 0;
+	finish = 0;
+	str = NULL;
+	if (s1 == NULL || set == NULL)
+		return (str);
+	while (ft_strchr(set, s1[start]) && s1[start])
+		start++;
+	finish = ft_strlen(s1);
+	while (ft_strrchr(set, s1[finish - 1]) && (start < (finish - 1)) && finish)
+		finish--;
+	str = ft_substr((char *)s1 + start, 0, finish - start);
+	if (!str)
 		return (NULL);
-	i = 0;
-	while (s1[i] && ft_search(set, s1[i]) != 0)
-		i++;
-	end = ft_strlen(s1);
-	while (end && ft_search(set, s1[end - 1]) != 0)
-		end--;
-	if (i >= end)
-		return (ft_strdup(""));
-	s2 = ft_substr(s1, i, end - i);
-	return (s2);
+	return (str);
 }
