@@ -3,37 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sshellie <sshellie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ntomika <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/31 19:35:25 by sshellie          #+#    #+#             */
-/*   Updated: 2020/11/21 20:30:33 by sshellie         ###   ########.fr       */
+/*   Created: 2020/11/10 00:47:04 by ntomika           #+#    #+#             */
+/*   Updated: 2020/11/24 18:29:56 by ntomika          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char		*ft_substr(char const *s, unsigned int start, size_t len)
+char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
+	char	*p;
+	size_t	l;
 	size_t	i;
-	size_t	j;
-	char	*str;
 
-	str = (char *)malloc(sizeof(*s) * (len + 1));
 	i = 0;
-	j = 0;
-	if (!(s))
+	if (!s)
+		return (0);
+	l = ft_strlen(s);
+	if (len + start > l)
+		len = l - start;
+	if (start >= l)
+		return (ft_strdup(""));
+	if ((p = (char *)malloc(len + 1)) == NULL)
 		return (NULL);
-	if (str == NULL)
-		return (NULL);
-	while (s[i])
+	while (len--)
 	{
-		if (i >= start && j < len)
-		{
-			str[j] = s[i];
-			j++;
-		}
+		p[i] = s[start];
 		i++;
+		start++;
 	}
-	str[j] = '\0';
-	return (str);
+	p[i] = '\0';
+	return (p);
 }

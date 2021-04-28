@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   strlen.c                                           :+:      :+:    :+:   */
+/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sshellie <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ntomika <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/31 19:35:25 by sshellie          #+#    #+#             */
-/*   Updated: 2020/10/31 19:35:30 by sshellie         ###   ########.fr       */
+/*   Created: 2020/11/15 20:29:13 by ntomika           #+#    #+#             */
+/*   Updated: 2020/11/20 20:15:54 by ntomika          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,19 @@
 
 void	ft_putnbr_fd(int n, int fd)
 {
-	char c;
-	long sign;
+	long m;
 
-	sign = n;
-	if (sign < 0)
+	m = n;
+	if (m < 0)
 	{
-		sign = -sign;
-		c = '-';
-		write(fd, &c, 1);
+		ft_putchar_fd('-', fd);
+		m = m * (-1);
 	}
-	if (sign >= 10)
+	if (m > 9)
 	{
-		ft_putnbr_fd(sign / 10, fd);
-		ft_putnbr_fd(sign % 10, fd);
+		ft_putnbr_fd(m / 10, fd);
+		ft_putchar_fd(m % 10 + '0', fd);
 	}
-	else
-	{
-		c = (sign + '0');
-		write(fd, &c, 1);
-	}
+	if (m < 10)
+		ft_putchar_fd(m % 10 + '0', fd);
 }

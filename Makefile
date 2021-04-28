@@ -3,57 +3,52 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sshellie <sshellie@student.42.fr>          +#+  +:+       +#+         #
+#    By: ntomika <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2020/10/31 19:35:25 by sshellie          #+#    #+#              #
-#    Updated: 2020/11/23 21:12:36 by sshellie         ###   ########.fr        #
+#    Created: 2020/11/10 00:47:42 by ntomika           #+#    #+#              #
+#    Updated: 2020/11/24 19:24:04 by ntomika          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME	= libft.a
+NAME		= libft.a
 
-SRCS	= ft_atoi.c ft_bzero.c ft_calloc.c ft_isalnum.c\
-		ft_isalpha.c ft_isascii.c ft_isdigit.c ft_isprint.c ft_memccpy.c\
-		ft_memchr.c ft_memcmp.c ft_memcpy.c ft_memmove.c ft_memset.c\
-		ft_strchr.c ft_strdup.c ft_strlcat.c ft_strlcpy.c ft_strlen.c\
-		ft_strncmp.c ft_strnstr.c ft_strrchr.c ft_tolower.c ft_toupper.c\
-		ft_substr.c ft_strjoin.c ft_strtrim.c ft_itoa.c ft_strmapi.c ft_split.c\
-		ft_putchar_fd.c ft_putstr_fd.c ft_putendl_fd.c ft_putnbr_fd.c
+CFLAGS		= -Wall -Wextra -Werror
 
-SRCBNS	= ft_lstnew.c ft_lstadd_front.c ft_lstlast.c ft_lstsize.c
+SRCS		= ft_atoi.c ft_bzero.c ft_calloc.c ft_isalnum.c \
+			ft_isalpha.c ft_isascii.c ft_isdigit.c ft_isprint.c \
+			ft_memccpy.c ft_memchr.c ft_memcmp.c ft_memcpy.c \
+			ft_memmove.c ft_memset.c ft_strchr.c ft_strdup.c \
+			ft_strlcat.c ft_strlcpy.c ft_strlen.c ft_strncmp.c \
+			ft_strnstr.c ft_strrchr.c ft_substr.c ft_tolower.c \
+			ft_toupper.c ft_strjoin.c ft_itoa.c ft_putchar_fd.c\
+			ft_putstr_fd.c ft_putnbr_fd.c ft_strmapi.c ft_putendl_fd.c \
+			ft_strtrim.c ft_split.c
 
-SRCOBJ	= ${SRCS:.c=.o}
-BNSOBJ	= ${SRCBNS:.c=.o}
+BONUS		= ft_lstnew.c ft_lstadd_front.c ft_lstsize.c ft_lstlast.c \
+		  	ft_lstadd_back.c ft_lstdelone.c ft_lstiter.c
 
-HEADERS	= libft.h
+BONUS_OBJS	= $(BONUS:.c=.o)
 
-CFLAGS	= -Wall -Wextra -Werror
+OBJS		= $(SRCS:.c=.o)
 
-RM		= rm -rf
+RM			= rm -f
 
-MLB		= ar rc
+all:		$(NAME)
 
-CC		= gcc
+$(NAME):	$(OBJS)
+			ar rcs $(NAME) $(OBJS)
 
-INCLUDE = libft.h
+bonus:		$(OBJS) $(BONUS_OBJS)
+			ar rcs $(NAME) $(OBJS) $(BONUS_OBJS)
 
-all: $(NAME)
+$(.c=.o):	gcc $(CFLAGS) -I. -c $< -o $(<:.c=.o)
 
-$(NAME): $(SRCOBJ)
-	$(MLB) $(NAME) $(SRCOBJ)
-
-c.o:
-		${CC} ${CFLAGS} -c $< -o ${<:.c=.o} -I ${INCLUDE}
 clean:
-	rm -rf $(SRCOBJ) $(BNSOBJ)
- 
-fclean: clean
-	rm -rf $(NAME)
+			$(RM) $(OBJS) $(BONUS_OBJS)
 
-re: fclean all
+fclean:		clean
+			$(RM) $(NAME)
 
-bonus: $(SRCOBJ) $(BNSOBJ)
-	$(MLB) $(NAME) $(SRCOBJ) $(BNSOBJ)
+re:			fclean all
 
-.PHONY: all clean fclean re bonus
-
+.PHONY:		all clean fclean re bonus

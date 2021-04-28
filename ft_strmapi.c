@@ -3,32 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sshellie <sshellie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ntomika <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/31 19:35:25 by sshellie          #+#    #+#             */
-/*   Updated: 2020/11/22 15:20:49 by sshellie         ###   ########.fr       */
+/*   Created: 2020/11/15 18:43:48 by ntomika           #+#    #+#             */
+/*   Updated: 2020/11/20 20:13:08 by ntomika          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char		*ft_strmapi(char const *s, char (*f)(unsigned int, char))
+char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
-	int		size;
-	char	*res;
+	char	*ns;
+	size_t	len;
+	int		i;
 
-	if (s == NULL || f == NULL)
+	i = 0;
+	if (!s)
 		return (NULL);
-	size = (ft_strlen(s) + 1);
-	res = (char *)malloc(sizeof(char) * size);
-	if (res == NULL)
+	len = ft_strlen(s);
+	ns = (char *)malloc(sizeof(char) * (len + 1));
+	if (ns == NULL)
 		return (NULL);
-	size = 0;
-	while (s[size])
+	while (s[i] != '\0')
 	{
-		res[size] = f(size, s[size]);
-		size++;
+		ns[i] = f(i, s[i]);
+		i++;
 	}
-	res[size] = '\0';
-	return (res);
+	ns[i] = '\0';
+	return (ns);
 }
